@@ -1,0 +1,144 @@
+
+
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+
+  <meta charset="UTF-8">
+  
+<link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png" />
+<meta name="apple-mobile-web-app-title" content="CodePen">
+
+<link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico" />
+
+<link rel="mask-icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111" />
+
+
+  <title>CodePen - 3-2 React Hello World Template</title>
+  
+  
+  
+  
+<style>
+/**
+ * Credit
+ * counter desgin is from dribbble (https://dribbble.com/shots/5539678-Stepper-VI)
+ * chevron icons are from font-awesome (https://fontawesome.com/icons/chevron-down?style=solid)
+**/
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #f26072;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  min-width: 200px;
+}
+
+.number {
+  font-size: 72px;
+  color: #fbf5f5;
+  font-family: Verdana;
+  line-height: 1.75em;
+  text-align: center;
+  user-select: none;
+}
+
+.chevron {
+  background: transparent center center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  width: 70px;
+  height: 70px;
+  transition: ackground-image 0.3s;
+}
+
+.chevron-up {
+  background-image: url("data:image/svg+xml, %3Csvg aria-hidden='true' focusable='false' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='%23f6909c' d='M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+.chevron-up:hover {
+  background-image: url("data:image/svg+xml, %3Csvg aria-hidden='true' focusable='false' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='%23fbf5f5' d='M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+.chevron-down {
+  background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='%23f6909c' d='M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+.chevron-down:hover {
+  background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='%23fbf5f5' d='M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z'%3E%3C/path%3E%3C/svg%3E");
+}
+</style>
+
+  
+  
+  
+  
+
+</head>
+
+<body translate="no" >
+  <div id="root"></div>
+  
+  <script src='https://unpkg.com/react/umd/react.development.js'></script>
+<script src='https://unpkg.com/react-dom/umd/react-dom.development.js'></script>
+      <script id="rendered-js" >
+const { useState } = React;
+const counters = Array.from({ length: 5 }, (_, index) => index);
+
+const Counter = props => {
+  const { startValue, endValue } = props;
+  const [num, setNum] = useState(startValue);
+  const addNum = () => setNum(num + 1);
+  const reduceNum = () => setNum(num - 1);
+  const handle = type => () => {
+    type === 'add' ? setNum(num + 1) : setNum(num - 1);
+  };
+
+  return /*#__PURE__*/(
+    React.createElement("div", { className: "container" }, /*#__PURE__*/
+    React.createElement("div", { className: "chevron chevron-up",
+      style: { visibility: num >= endValue && 'hidden' },
+      onClick: handle('add') }), /*#__PURE__*/
+    React.createElement("div", { className: "number" },
+    num), /*#__PURE__*/
+
+    React.createElement("div", { className: "chevron chevron-down",
+      style: { visibility: num <= 0 && 'hidden' },
+      onClick: handle('reduce') })));
+
+
+};
+
+ReactDOM.render( /*#__PURE__*/
+React.createElement("div", { style: {
+    display: 'flex',
+    flexWrap: 'wrap' } }, /*#__PURE__*/
+
+
+
+
+React.createElement(Counter, { startValue: 1, endValue: 11 }), /*#__PURE__*/
+React.createElement(Counter, { startValue: 2, endValue: 12 }), /*#__PURE__*/
+React.createElement(Counter, { startValue: 3, endValue: 13 }), /*#__PURE__*/
+React.createElement(Counter, { startValue: 4, endValue: 14 }), /*#__PURE__*/
+React.createElement(Counter, { startValue: 5, endValue: 15 })),
+document.getElementById('root'));
+    </script>
+
+  
+
+</body>
+
+</html>
+ 
